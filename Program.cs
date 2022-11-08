@@ -44,6 +44,8 @@ async Task HandleUpdatesAsync(ITelegramBotClient botClient, Update update, Cance
 
 async Task HandleMessage(ITelegramBotClient botClient, Message message)
 {
+    string firstName = message.From.FirstName;
+
     ReplyKeyboardMarkup keyboard = new(new[]
     {
             new KeyboardButton[] {"Электронки", "Жидкости"},
@@ -54,22 +56,8 @@ async Task HandleMessage(ITelegramBotClient botClient, Message message)
         ResizeKeyboard = true
     };
 
-    string firstName = message.From.FirstName;
-
-
-    switch (message.Text)
-    {
-        case "/start":
-            {
-                await botClient.SendTextMessageAsync(message.Chat.Id, $"Дообро пожаловать в магазин MonaPuff, {firstName}, выберите какой то пункт", replyMarkup: keyboard);
-                break;
-            }
-        case "Электронки":
-            {
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Вы выбрали - Электронки", replyMarkup: keyboard);
-
-                InlineKeyboardMarkup inlineKeyboard = new(new[]
-                {
+    InlineKeyboardMarkup inlineKeyboard_Vape = new(new[]
+               {
             new[]
             {
                 InlineKeyboardButton.WithCallbackData("HQD", "hqd"),
@@ -82,13 +70,46 @@ async Task HandleMessage(ITelegramBotClient botClient, Message message)
             },
                 });
 
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Выбирайте ^_^", replyMarkup: inlineKeyboard);
+    InlineKeyboardMarkup inlineKeyboard_Zhidkosti = new(new[]
+           {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Brusko", "brusko"),
+                InlineKeyboardButton.WithCallbackData("Boshki", "boshki"),
+                InlineKeyboardButton.WithCallbackData("Мишки", "мишки"),
+
+            },
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("HotSpot", "hotspot"),
+                InlineKeyboardButton.WithCallbackData("Husky", "husky"),
+                InlineKeyboardButton.WithCallbackData("Maxwell's", "maxwells"),
+
+            },
+                });
+
+    Message msg = new();
+    //Message msg = await botClient.SendTextMessageAsync(message.Chat.Id, "Дообро пожаловать в магазин MonaPuff", replyMarkup: keyboard);
+
+    switch (message.Text)
+    {
+        case "/start":
+            {
+                msg = await botClient.SendTextMessageAsync(message.Chat.Id, $"{firstName}, выберите какой-то пункт", replyMarkup: keyboard);
+                break;
+            }
+        case "Электронки":
+            {
+                msg = await botClient.SendTextMessageAsync(message.Chat.Id, "Вы выбрали - Электронки", replyMarkup: keyboard);
+                msg = await botClient.SendTextMessageAsync(message.Chat.Id, "Выбирайте ^_^", replyMarkup: inlineKeyboard_Vape);
 
                 break;
             }
         case "Жидкости":
             {
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Вы выбрали - Жидкости", replyMarkup: keyboard);
+                msg = await botClient.SendTextMessageAsync(message.Chat.Id, "Вы выбрали - Жидкости", replyMarkup: keyboard);
+                msg = await botClient.SendTextMessageAsync(message.Chat.Id, "Выбирайте ^_^", replyMarkup: inlineKeyboard_Zhidkosti);
+
                 break;
             }
         case "Кальянный табак":
@@ -121,27 +142,103 @@ async Task HandleMessage(ITelegramBotClient botClient, Message message)
 
 async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callbackQuery)
 {
-    if (callbackQuery.Data == "hqd")
+    InlineKeyboardMarkup inlineKeyboard_Zakaz = new(new[]
     {
-        await botClient.SendTextMessageAsync(
-            callbackQuery.Message.Chat.Id,
-            $"Вы хотите купить? hqd"
-        );
-        return;
-    }
-    if (callbackQuery.Data == "elf bar")
+         new[]
+            {
+                InlineKeyboardButton.WithUrl("Связаться c Армянином", @"https://t.me/vova534"),
+                InlineKeyboardButton.WithUrl("Связаться c Азером", @"https://t.me/loaffer"),
+}
+    });
+
+    InlineKeyboardMarkup inlineKeyboard_Vape = new(new[]
+               {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("HQD", "hqd"),
+                InlineKeyboardButton.WithCallbackData("ELF BAR", "elf bar"),
+            },
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("PUFFMI", "puffmi"),
+                InlineKeyboardButton.WithCallbackData("UDN", "UDN"),
+            },
+                });
+
+    InlineKeyboardMarkup inlineKeyboard_HQD = new(new[]
+               {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("CUVIE", "cuvie"),
+                InlineKeyboardButton.WithCallbackData("CUVIE PLUS", "cuvie plus"),
+                InlineKeyboardButton.WithCallbackData("HIT", "hit"),
+                InlineKeyboardButton.WithCallbackData("MEGA", "mega"),
+            },
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("KING", "king"),
+                InlineKeyboardButton.WithCallbackData("MAXX", "maxx"),
+                InlineKeyboardButton.WithCallbackData("CUVIE AIR", "cuvie air"),
+                InlineKeyboardButton.WithCallbackData("HOT", "hot"),
+            },
+            new[]
+            {                
+                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+            },
+                });
+
+    InlineKeyboardMarkup inlineKeyboard_ElfBar = new(new[]
     {
-        await botClient.SendTextMessageAsync(
-            callbackQuery.Message.Chat.Id,
-            $"Вы хотите продать? elf bar"
-        );
+        new[]
+            {
+                InlineKeyboardButton.WithCallbackData("1500", "elf_1500"),
+                InlineKeyboardButton.WithCallbackData("2000", "elf_2000"),
+                InlineKeyboardButton.WithCallbackData("3000", "elf_3000"),
+                InlineKeyboardButton.WithCallbackData("4000", "elf_4000"),
+            },
+        new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+            },
+    });
+
+
+    if (callbackQuery.Data == "main menu")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выбирайте ^_^?",
+            replyMarkup: inlineKeyboard_Vape);
         return;
     }
 
+    if (callbackQuery.Data == "hqd")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Вы хотите купить HQD?",
+            replyMarkup: inlineKeyboard_HQD);
+        return;
+    }
+
+    if (callbackQuery.Data == "elf bar")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Вы хотите купить Elf Bar?",
+            replyMarkup: inlineKeyboard_ElfBar);
+        return;
+    }
+
+
+
         await botClient.SendTextMessageAsync(
         callbackQuery.Message.Chat.Id,
-        $"Это еще не работает: {callbackQuery.Data}"
-        );
+        $"Для заказа напишите нам:",
+        replyMarkup: inlineKeyboard_Zakaz);
     return;
 }
 
@@ -154,5 +251,6 @@ Task HandleErrorAsync(ITelegramBotClient client, Exception exception, Cancellati
         _ => exception.ToString()
     };
     Console.WriteLine(ErrorMessage);
+    
     return Task.CompletedTask;
 }

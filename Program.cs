@@ -81,38 +81,6 @@ async Task HandleMessage(ITelegramBotClient botClient, Message message)
             },
                 });
 
-    InlineKeyboardMarkup inlineKeyboard_Vape = new(new[]
-               {
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData("HQD", "hqd"),
-                InlineKeyboardButton.WithCallbackData("ELF BAR", "elf bar"),
-            },
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData("PUFFMI", "puffmi"),
-                InlineKeyboardButton.WithCallbackData("UDN", "UDN"),
-            },
-                });
-
-    InlineKeyboardMarkup inlineKeyboard_Zhidkosti = new(new[]
-       {
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData("Brusko", "brusko"),
-                InlineKeyboardButton.WithCallbackData("Boshki", "boshki"),
-                InlineKeyboardButton.WithCallbackData("Мишки", "мишки"),
-
-            },
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData("HotSpot", "hotspot"),
-                InlineKeyboardButton.WithCallbackData("Husky", "husky"),
-                InlineKeyboardButton.WithCallbackData("Maxwell's", "maxwells"),
-
-            },
-                });
-
     Message msg = new();
 
     //Message msg = await botClient.SendTextMessageAsync(message.Chat.Id, "Дообро пожаловать в магазин MonaPuff", replyMarkup: keyboard);
@@ -121,7 +89,7 @@ async Task HandleMessage(ITelegramBotClient botClient, Message message)
     {
         case "/start":
             {
-                msg = await botClient.SendTextMessageAsync(message.Chat.Id, $"{firstName}, выберите какой-то пункт", replyMarkup: keyboard);
+                msg = await botClient.SendTextMessageAsync(message.Chat.Id, $"{firstName}, Добро пожаловать в MonaPuff, выберите какой-то пункт 🔽", replyMarkup: keyboard);
                 break;
             }
         case "Меню":
@@ -138,31 +106,32 @@ async Task HandleMessage(ITelegramBotClient botClient, Message message)
 
                 break;
             }
-        case "Кальянный табак":
+        case "Наш Instagram":
             {
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Вы выбрали - Кальянный табак", replyMarkup: keyboard);
+                var hyperLinkKeyboard = new InlineKeyboardMarkup(InlineKeyboardButton.WithUrl("MonaPuff", "https://www.instagram.com/_monapuff_/"));
+                await botClient.SendTextMessageAsync(message.Chat.Id, "Наш Instagram:", replyMarkup: hyperLinkKeyboard);
                 break;
             }
-        case "Стики/Сигареты":
+        case "Наш Telegram":
             {
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Вы выбрали - Стики/Сигареты", replyMarkup: keyboard);
+                var hyperLinkKeyboard = new InlineKeyboardMarkup(InlineKeyboardButton.WithUrl("MonaPuff", "https://t.me/monatobacco"));
+                await botClient.SendTextMessageAsync(message.Chat.Id, "Наш Telegram канал:", replyMarkup: hyperLinkKeyboard);
                 break;
             }
-        case "POD/Устройства":
+        case "Наши магазины":
             {
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Вы выбрали - POD/Устройства", replyMarkup: keyboard);
-                break;
-            }
-        case "Аксессуары":
-            {
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Вы выбрали - Аксессуары", replyMarkup: keyboard);
+                var hyperLinkKeyboard = new InlineKeyboardMarkup(new[] {new[]{
+                    InlineKeyboardButton.WithUrl("MonaPuff на Серпуховской", "https://yandex.ru/profile/-/CCUbMIBUWC"),
+                    InlineKeyboardButton.WithUrl("MonaPuff на Южной ", "https://yandex.ru/maps/-/CCUbMMEkPD")    }
+
+                });
+
+                //await botClient.SendLocationAsync(message.Chat.Id, 55.727353, 37.626490);
+                await botClient.SendTextMessageAsync(message.Chat.Id, "Наши магазины на яндекс картах:", replyMarkup: hyperLinkKeyboard);
                 break;
             }
         default: break;
     }
-
-    //await botClient.SendTextMessageAsync(message.Chat.Id, $"Вы выбрали:\n{message.Text}");
-
     return;
 }
 
@@ -202,6 +171,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             replyMarkup: inlineKeyboard_Menu);
         return;
     }
+
     #region Электронки
     #region Команды
     InlineKeyboardMarkup inlineKeyboard_Vape = new(new[]
@@ -244,7 +214,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             },
             new[]
             {
-                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+                InlineKeyboardButton.WithCallbackData("Назад", "электронки")
             },
                 });
 
@@ -259,7 +229,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             },
         new[]
             {
-                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+                InlineKeyboardButton.WithCallbackData("Назад", "электронки")
             },
     });
 
@@ -273,7 +243,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             },
         new[]
             {
-                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+                InlineKeyboardButton.WithCallbackData("Назад", "электронки")
             },
     });
 
@@ -287,7 +257,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             },
         new[]
             {
-                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+                InlineKeyboardButton.WithCallbackData("Назад", "электронки")
             },
     });
 
@@ -303,7 +273,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             },
         new[]
             {
-                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+                InlineKeyboardButton.WithCallbackData("Назад", "электронки")
             },
     });
 
@@ -315,7 +285,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             },
         new[]
             {
-                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+                InlineKeyboardButton.WithCallbackData("Назад", "электронки")
             },
     });
 
@@ -327,11 +297,10 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             },
         new[]
             {
-                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+                InlineKeyboardButton.WithCallbackData("Назад", "электронки")
             },
     });
     #endregion
-
 
     if (callbackQuery.Data == "электронки")
     {
@@ -425,6 +394,10 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
                 InlineKeyboardButton.WithCallbackData("Maxwell's", "maxwells"),
 
             },
+        new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+            },
                 });
 
     #endregion
@@ -448,6 +421,33 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
     }*/
     #endregion
 
+    #region Кальянный табак
+    #region Команды
+
+    #endregion
+    #endregion
+
+    #region Стики/Сигареты
+    #region Команды
+
+    #endregion
+    #endregion
+
+    #region POD/Устройства
+    #region Команды
+
+    #endregion
+    #endregion
+
+    #region Аксессуары
+    #region Команды
+
+    #endregion
+    #endregion
+
+
+
+
 
     await botClient.SendTextMessageAsync(
         callbackQuery.Message.Chat.Id,
@@ -458,6 +458,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
 
 Task HandleErrorAsync(ITelegramBotClient client, Exception exception, CancellationToken cancellationToken)
 {
+
     var ErrorMessage = exception switch
     {
         ApiRequestException apiRequestException
@@ -470,11 +471,3 @@ Task HandleErrorAsync(ITelegramBotClient client, Exception exception, Cancellati
     return Task.CompletedTask;
 }
 
-void IgnoreExceptions(Action act)
-{
-    try
-    {
-        act.Invoke();
-    }
-    catch { }
-}

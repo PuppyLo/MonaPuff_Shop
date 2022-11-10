@@ -158,7 +158,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             {
                 InlineKeyboardButton.WithCallbackData("Стики/Сигареты", "стики/сигареты"),
                 InlineKeyboardButton.WithCallbackData("POD/Устройства", "POD/Устройства"),
-                InlineKeyboardButton.WithCallbackData("Аксессуары", "аксессуары")
+                InlineKeyboardButton.WithCallbackData("Аксессуары/Запчасти к POD","аксессуары")
             },
                 });
 
@@ -410,39 +410,165 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             replyMarkup: inlineKeyboard_Zhidkosti);
         return;
     }
-    /*if (callbackQuery.Data == "hqd")
-    {
-        await botClient.EditMessageTextAsync(
-            callbackQuery.From.Id.ToString(),
-            callbackQuery.Message.MessageId,
-            $"Вы хотите купить HQD?",
-            replyMarkup: inlineKeyboard_HQD);
-        return;
-    }*/
-    #endregion
 
-    #region Кальянный табак
-    #region Команды
-
-    #endregion
     #endregion
 
     #region Стики/Сигареты
     #region Команды
+    InlineKeyboardMarkup inlineKeyboard_Stics = new(new[]
+           {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Heets", "heets"),
+                InlineKeyboardButton.WithCallbackData("Fiit", "fiit"),
+
+            },
+        new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+            },
+                });
+    InlineKeyboardMarkup inlineKeyboard_Heets = new(new[]
+           {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Amber", "brusko"),
+                InlineKeyboardButton.WithCallbackData("Ruby", "boshki"),
+
+            },
+        new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Назад", "стики/сигареты")
+            },
+                });
+    InlineKeyboardMarkup inlineKeyboard_Fiit = new(new[]
+           {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Regular", "brusko"),
+                InlineKeyboardButton.WithCallbackData("Viola", "boshki"),
+
+            },
+        new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Назад", "стики/сигареты")
+            },
+                });
+    #endregion
+    if (callbackQuery.Data == "стики/сигареты")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Вы хотите купить Стики?",
+            replyMarkup: inlineKeyboard_Stics);
+        return;
+    }
+    if (callbackQuery.Data == "heets")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Вы хотите купить Стики HEETS?",
+            replyMarkup: inlineKeyboard_Heets);
+        return;
+    }
+    if (callbackQuery.Data == "fiit")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Вы хотите купить Стики?",
+            replyMarkup: inlineKeyboard_Fiit);
+        return;
+    }
+    #endregion
+
+    #region Кальянный табак
+    #region Команды
+    InlineKeyboardMarkup inlineKeyboard_Tabak = new(new[]
+           {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("DarkSide", "darkside"),
+                InlineKeyboardButton.WithCallbackData("Must Have", "must have"),
+                InlineKeyboardButton.WithCallbackData("Born", "born"),
+                InlineKeyboardButton.WithCallbackData("Daily Huak", "daily huak"),
+
+            },
+        new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+            },
+                });
 
     #endregion
+    if (callbackQuery.Data == "кальянный табак")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выберите производителя?",
+            replyMarkup: inlineKeyboard_Tabak);
+        return;
+    }
     #endregion
 
     #region POD/Устройства
     #region Команды
+    InlineKeyboardMarkup inlineKeyboard_Pod = new(new[]
+           {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Voopoo", "voopoo"),
+                InlineKeyboardButton.WithCallbackData("Vaparesso", "vaparesso"),
+                InlineKeyboardButton.WithCallbackData("Smok", "smok"),
+                InlineKeyboardButton.WithCallbackData("Gekk Vape", "geek vape"),
+
+            },
+        new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+            },
+                });
 
     #endregion
+    if (callbackQuery.Data == "POD/Устройства")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выберите производителя?",
+            replyMarkup: inlineKeyboard_Pod);
+        return;
+    }
     #endregion
 
     #region Аксессуары
     #region Команды
+    InlineKeyboardMarkup inlineKeyboard_Acsessuar = new(new[]
+           {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Картриджи", "картриджи"),
+                InlineKeyboardButton.WithCallbackData("Испарители", "vaparesso")
+            },
+        new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
+            },
+                });
 
     #endregion
+    if (callbackQuery.Data == "аксессуары")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выберите интересующую категорию?",
+            replyMarkup: inlineKeyboard_Acsessuar);
+        return;
+    }
     #endregion
 
 
@@ -451,7 +577,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
 
     await botClient.SendTextMessageAsync(
         callbackQuery.Message.Chat.Id,
-        $"Для заказа напишите нам:",
+        $"Для уточнения наличия товара и его бронирования свяжитесь с одним из чёрных:",
         replyMarkup: inlineKeyboard_Kontakty);
     return;
 }

@@ -399,6 +399,33 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
                 InlineKeyboardButton.WithCallbackData("Назад", "main menu")
             },
                 });
+    InlineKeyboardMarkup inlineKeyboard_Brusko = new(new[]
+          {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Brusko - 2%", "brusko2"),
+                InlineKeyboardButton.WithCallbackData("Brusko - 5%", "brusko5")
+
+            },
+        new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Назад", "жидкости")
+            },
+                });
+
+    InlineKeyboardMarkup inlineKeyboard_HotSpot = new(new[]
+      {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("HotSpot 18 - 2%", "brusko2"),
+                InlineKeyboardButton.WithCallbackData("HotSpot 20 - 5%", "brusko5")
+
+            },
+        new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Назад", "жидкости")
+            },
+                });
 
     #endregion
     if (callbackQuery.Data == "жидкости")
@@ -408,6 +435,24 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             callbackQuery.Message.MessageId,
             $"Выберите производителя?",
             replyMarkup: inlineKeyboard_Zhidkosti);
+        return;
+    }
+    if (callbackQuery.Data == "brusko")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выбирайтел",
+            replyMarkup: inlineKeyboard_Brusko);
+        return;
+    }
+    if (callbackQuery.Data == "hotspot")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выбирайте? \n 123 \n 123",
+            replyMarkup: inlineKeyboard_HotSpot);
         return;
     }
 
@@ -492,7 +537,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             {
                 InlineKeyboardButton.WithCallbackData("DarkSide", "darkside"),
                 InlineKeyboardButton.WithCallbackData("Must Have", "must have"),
-                InlineKeyboardButton.WithCallbackData("Born", "born"),
+                InlineKeyboardButton.WithCallbackData("burn", "born"),
                 InlineKeyboardButton.WithCallbackData("Daily Huak", "daily huak"),
 
             },

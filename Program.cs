@@ -50,12 +50,12 @@ async Task HandleMessage(ITelegramBotClient botClient, Message message)
 {
     string firstName = message.From.FirstName;
 
-    ReplyKeyboardMarkup keyboard = new(new[]
-    {
+    ReplyKeyboardMarkup keyboard = new(
+        new[]
+        {
             new KeyboardButton[] {"Меню", "Контакты"},
            // new KeyboardButton[] {"Отзывы"}
-
-    })
+        })
     {
         ResizeKeyboard = true
     };
@@ -65,7 +65,6 @@ async Task HandleMessage(ITelegramBotClient botClient, Message message)
          new[]
          {
                 InlineKeyboardButton.WithUrl("Связаться c Владимиром", @"https://t.me/vova534"),
-                InlineKeyboardButton.WithUrl("Связаться c Расулом", @"https://t.me/loaffer"),
          }
     });
 
@@ -85,10 +84,6 @@ async Task HandleMessage(ITelegramBotClient botClient, Message message)
             }
                 });
 
-    // Message msg = new();
-
-    //Message msg = await botClient.SendTextMessageAsync(message.Chat.Id, "Дообро пожаловать в магазин MonaPuff", replyMarkup: keyboard);
-
     switch (message.Text)
     {
         case "/start":
@@ -98,22 +93,17 @@ async Task HandleMessage(ITelegramBotClient botClient, Message message)
             }
         case "Меню":
             {
-                //msg = await botClient.SendTextMessageAsync(message.Chat.Id, "Вы выбрали - Электронки", replyMarkup: keyboard);
                 await botClient.SendTextMessageAsync(message.Chat.Id, "Выбирайте ^_^", replyMarkup: inlineKeyboard_Menu);
-
                 break;
             }
         case "Контакты":
             {
-                //msg = await botClient.SendTextMessageAsync(message.Chat.Id, "Вы выбрали - Жидкости", replyMarkup: keyboard);
-                await botClient.SendTextMessageAsync(message.Chat.Id, "Для связи: ", replyMarkup: inlineKeyboard_Kontakty);
-
+                await botClient.SendTextMessageAsync(message.Chat.Id, "Связаться с менеджером/совершить заказ: ", replyMarkup: inlineKeyboard_Kontakty);
                 break;
             }
 
         default: break;
     }
-
     return;
 }
 
@@ -126,7 +116,6 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
          new[]
          {
                 InlineKeyboardButton.WithUrl("Связаться c Владимиром", @"https://t.me/vova534"),
-                InlineKeyboardButton.WithUrl("Связаться c Расулом", @"https://t.me/loaffer"),
          }
     });
 
@@ -218,9 +207,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
 {
         new[]
             {
-                InlineKeyboardButton.WithCallbackData("1500", "lostmary_1500"),
-                InlineKeyboardButton.WithCallbackData("4000", "lostmary_2500"),
-                InlineKeyboardButton.WithCallbackData("5000", "lostmary_4000"),
+                InlineKeyboardButton.WithCallbackData("4000", "lostmary_4000"),
                 InlineKeyboardButton.WithCallbackData("5000", "lostmary_5000")
             },
         new[]
@@ -289,6 +276,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             replyMarkup: inlineKeyboard_Vape);
         return;
     }
+
     #region HQD
     if (callbackQuery.Data == "hqd")
     {
@@ -306,7 +294,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             {   InlineKeyboardButton.WithCallbackData("Заказать", "контакты"),
                 InlineKeyboardButton.WithCallbackData("Назад", "hqd")
             }
-                });
+    });
 
 
     if (callbackQuery.Data == "cuvie")
@@ -316,7 +304,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             await botClient.EditMessageTextAsync(
                 callbackQuery.From.Id.ToString(),
                 callbackQuery.Message.MessageId,
-                $"Выберите вкус: \n Big Smoke \n Ананас \n Апельсин \n Арбуз \n Банан \n Ванильное мороженое \n Виноград \n Гранатовый сок Смородина и лимон \n Дыня \n Жвачка Мята Арбуз \n Йогурт Лесные ягоды \n Капучино \n Клубника \n Клубника Киви \n Кола \n Лимонный пирог \n Личи \n Малина Лимон \n Манго \n Персик \n Розовый лимонад \n Сибирь,мята,хвоя и лесные ягоды \n Фруктовый микс \n Черника \n Черника Малина Виноград \n Энергетик \n Яблоко \n Яблоко Киви Энергетик\r\n",
+                $"Выберите вкус и напишите нам: \n Big Smoke \n Ананас \n Апельсин \n Арбуз \n Банан \n Ванильное мороженое \n Виноград \n Гранатовый сок Смородина и лимон \n Дыня \n Жвачка Мята Арбуз \n Йогурт Лесные ягоды \n Капучино \n Клубника \n Клубника Киви \n Кола \n Лимонный пирог \n Личи \n Малина Лимон \n Манго \n Персик \n Розовый лимонад \n Сибирь,мята,хвоя и лесные ягоды \n Фруктовый микс \n Черника \n Черника Малина Виноград \n Энергетик \n Яблоко \n Яблоко Киви Энергетик\r\n",
                 replyMarkup: inlineKeyboard_HQDBack);
             return;
         }
@@ -327,7 +315,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
         await botClient.EditMessageTextAsync(
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
-            $"Выберите вкус:\n BigSmoke \n FruitFusion \n Lov66 \n PinkLemon \n PogOrangeGuava \n Ананас \n Арбузнаяжвачка \n Байкал \n Банан \n Ванильноемороженое \n Виноград \n ГранатКиви \n Гранатовыйсоксмородинаилимон \n Дыня \n ДыняТорпедо \n Ежевика \n ЖвачкаМятаАрбуз \n ЙогуртЛесныеягоды \n Кактусовыйлимонад \n Кислыемармеладныечервячки \n Клубника \n КлубникаБанан \n КлубникаКиви \n Клубника-питайя \n Клубничноепеченье \n Клубничныйлимонад \n Клубничныймилкшейк \n Ледянаямята \n ЛедянойПерсик \n Лимонсморскойсолью \n Личи \n МалинаЛимон \n Манго \n МангоПерсик \n Маракуйя \n Мороженое \n Мультифрукт \n ПинаКолада \n Соленаякарамель \n Тархун \n Черника \n ЧерникаМалина \n ЧерникаМалинаВиноград \n ЧерничныйЛимонад \n Черныйчайсосмородиной \n Чистый \n Энергетик \n Яблоко \n ЯблокоПерсик \n ЯблочныйПерсик\r\n",
+            $"Выберите вкус и напишите нам:\n BigSmoke \n FruitFusion \n Lov66 \n PinkLemon \n PogOrangeGuava \n Ананас \n Арбузнаяжвачка \n Байкал \n Банан \n Ванильноемороженое \n Виноград \n ГранатКиви \n Гранатовыйсоксмородинаилимон \n Дыня \n ДыняТорпедо \n Ежевика \n ЖвачкаМятаАрбуз \n ЙогуртЛесныеягоды \n Кактусовыйлимонад \n Кислыемармеладныечервячки \n Клубника \n КлубникаБанан \n КлубникаКиви \n Клубника-питайя \n Клубничноепеченье \n Клубничныйлимонад \n Клубничныймилкшейк \n Ледянаямята \n ЛедянойПерсик \n Лимонсморскойсолью \n Личи \n МалинаЛимон \n Манго \n МангоПерсик \n Маракуйя \n Мороженое \n Мультифрукт \n ПинаКолада \n Соленаякарамель \n Тархун \n Черника \n ЧерникаМалина \n ЧерникаМалинаВиноград \n ЧерничныйЛимонад \n Черныйчайсосмородиной \n Чистый \n Энергетик \n Яблоко \n ЯблокоПерсик \n ЯблочныйПерсик\r\n",
             replyMarkup: inlineKeyboard_HQDBack);
         return;
     }
@@ -345,7 +333,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
         await botClient.EditMessageTextAsync(
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
-            $"Выберите вкус: \n Ананасовый экспресс \n Арбузная жвачка \n Белый Русский \n Ванильное мороженое \n Клубника Арбуз \n Клубника Банан \n Клубника Киви \n Клубничный милкшейк \n Клубничный пончик \n Ледяная мята \n Лимонад Черника-малина \n Малина \n Манго \n Манго Дыня \n Мармелад \n Мармеладные мишки \n Персик \n Пинаколада \n Сочный арбуз \n Сочный виноград \n Черника \n Энергетик \n Яблоко Персик \n Ягодный фреш\r\n",
+            $"Выберите вкус и напишите нам: \n Ананасовый экспресс \n Арбузная жвачка \n Белый Русский \n Ванильное мороженое \n Клубника Арбуз \n Клубника Банан \n Клубника Киви \n Клубничный милкшейк \n Клубничный пончик \n Ледяная мята \n Лимонад Черника-малина \n Малина \n Манго \n Манго Дыня \n Мармелад \n Мармеладные мишки \n Персик \n Пинаколада \n Сочный арбуз \n Сочный виноград \n Черника \n Энергетик \n Яблоко Персик \n Ягодный фреш\r\n",
             replyMarkup: inlineKeyboard_HQDBack);
         return;
     }
@@ -354,7 +342,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
         await botClient.EditMessageTextAsync(
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
-            $"Выберите вкус: \n Ананас \n Ванильное мороженое \n Виноград \n Гранатовый сок Смородина и лимон \n Жвачка \n Жвачка Мята Арбуз \n Йогурт Лесные ягоды \n Капучино \n Клубника \n Клубника Банан \n Клубника Киви \n Коктейль Белый Русский \n Лайм Кола \n Малина Лимон \n Манго \n Мультифрукт \n Мятная Жвачка \n Персик \n Пинаколада \n Сибирь Мята Хвоя и лесные ягоды \n Туманы майями \n Черника \n Черника малина виноград \n Энергетик\r\n",
+            $"Выберите вкус и напишите нам: \n Ананас \n Ванильное мороженое \n Виноград \n Гранатовый сок Смородина и лимон \n Жвачка \n Жвачка Мята Арбуз \n Йогурт Лесные ягоды \n Капучино \n Клубника \n Клубника Банан \n Клубника Киви \n Коктейль Белый Русский \n Лайм Кола \n Малина Лимон \n Манго \n Мультифрукт \n Мятная Жвачка \n Персик \n Пинаколада \n Сибирь Мята Хвоя и лесные ягоды \n Туманы майями \n Черника \n Черника малина виноград \n Энергетик\r\n",
             replyMarkup: inlineKeyboard_HQDBack);
         return;
     }
@@ -363,7 +351,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
         await botClient.EditMessageTextAsync(
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
-            $"Выберите вкус: \n Ананас Манго Персик \n Апельсин Манго-гуава \n Барбарис \n Вишневая кола \n Двойное яблоко \n Карамельный табак \n Клубника Виноград \n Коктейль испанская орчата \n Коктейль Карибский дождь \n Коктейль Лонг Айленд \n Коктейль Маргарита \n Кола-ваниль \n Ликер Егерь \n Манго Клубника \n Мохито \n Ореховый батончик \n Персик Манго Арбуз \n Пинаколада \n Попкорн \n Сахарная вата \n Хвоя и лесные ягоды \n Черная смородина \n Черный чай со смородиной \n Энергетик Яблоко-киви \n Яблоко Манго Груша\r\n",
+            $"Выберите вкус и напишите нам: \n Ананас Манго Персик \n Апельсин Манго-гуава \n Барбарис \n Вишневая кола \n Двойное яблоко \n Карамельный табак \n Клубника Виноград \n Коктейль испанская орчата \n Коктейль Карибский дождь \n Коктейль Лонг Айленд \n Коктейль Маргарита \n Кола-ваниль \n Ликер Егерь \n Манго Клубника \n Мохито \n Ореховый батончик \n Персик Манго Арбуз \n Пинаколада \n Попкорн \n Сахарная вата \n Хвоя и лесные ягоды \n Черная смородина \n Черный чай со смородиной \n Энергетик Яблоко-киви \n Яблоко Манго Груша\r\n",
             replyMarkup: inlineKeyboard_HQDBack);
         return;
     }
@@ -372,7 +360,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
         await botClient.EditMessageTextAsync(
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
-            $"Выберите вкус: \n Арбуз Лёд \n Ананас \n Барбарис \n Виноград \n Гранатовый сок смородина и лимон \n Ежевика \n Жвачка \n Киви Лимонад \n Клубника Арбуз \n Клубника Киви \n Клубника Кокос \n Клубника манго \n Лайм кола \n Ледяной Банан \n Ледяной Шоколад \n Лесные ягоды \n Личи Айс \n Манго \n Мармеладные Мишки \n Мятная жвачка \n Персик \n Радуга \n Русский крем \n Сибирь \n Черника \n Черника Лимон \n Черника Малина \n Яблоко Груша \n Конфеты\r\n",
+            $"Выберите вкус и напишите нам: \n Арбуз Лёд \n Ананас \n Барбарис \n Виноград \n Гранатовый сок смородина и лимон \n Ежевика \n Жвачка \n Киви Лимонад \n Клубника Арбуз \n Клубника Киви \n Клубника Кокос \n Клубника манго \n Лайм кола \n Ледяной Банан \n Ледяной Шоколад \n Лесные ягоды \n Личи Айс \n Манго \n Мармеладные Мишки \n Мятная жвачка \n Персик \n Радуга \n Русский крем \n Сибирь \n Черника \n Черника Лимон \n Черника Малина \n Яблоко Груша \n Конфеты\r\n",
             replyMarkup: inlineKeyboard_HQDBack);
         return;
     }
@@ -381,12 +369,20 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
         await botClient.EditMessageTextAsync(
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
-            $"Выберите вкус: \n Ананас \n Арбуз \n Арбуз Банан \n Виноград \n Виноград Алоэ \n Вишневая кола \n Гранатовый сок со смородиной \n Ежевика \n Жвачка \n Йогуртовое Мороженое \n Клубника Банан \n Клубника Киви \n Лайм Малина \n Ледяное клубничное мороженое \n Лимон-Маракуйя \n Малина Лимон \n Манго \n Манго Персик Арбуз \n Персик \n Черная Смородина Мята Алое \n Черника \n Черника Малина Виноград \n Яблоко виноград лед \n Яблоко Персик \n Ягодный мохито \n Черная смородина\r\n",
+            $"Выберите вкус и напишите нам: \n Ананас \n Арбуз \n Арбуз Банан \n Виноград \n Виноград Алоэ \n Вишневая кола \n Гранатовый сок со смородиной \n Ежевика \n Жвачка \n Йогуртовое Мороженое \n Клубника Банан \n Клубника Киви \n Лайм Малина \n Ледяное клубничное мороженое \n Лимон-Маракуйя \n Малина Лимон \n Манго \n Манго Персик Арбуз \n Персик \n Черная Смородина Мята Алое \n Черника \n Черника Малина Виноград \n Яблоко виноград лед \n Яблоко Персик \n Ягодный мохито \n Черная смородина\r\n",
             replyMarkup: inlineKeyboard_HQDBack);
         return;
     }
     #endregion
+
     #region ELF BAR
+    InlineKeyboardMarkup inlineKeyboard_ElfBarBack = new(new[]
+          {
+            new[]
+            {   InlineKeyboardButton.WithCallbackData("Заказать", "контакты"),
+                InlineKeyboardButton.WithCallbackData("Назад", "elf bar")
+            }
+                });
     if (callbackQuery.Data == "elf bar")
     {
         await botClient.EditMessageTextAsync(
@@ -402,7 +398,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
             $"Выберите вкус: \n Арбуз \n Ананас Персик Манго \n Банановое молоко \n Банановый лед \n Виноград \n Виноградный энергетик \n Дыня кокос \n Киви Маракуйя Гуава \n Кислое яблоко \n Клубника Банан \n Клубника Виноград \n Клубника Виноград \n Клубничное мороженое \n Клубничный энергетик \n Кокосовая дыня \n Лимонад Голубика Малина \n Манго \n Манго Персик Арбуз \n Персик Манго Гуава \n РедБулл Виноград \n РедБулл Клубника \n Розовый лимонад \n Черника\r\n",
-            replyMarkup: inlineKeyboard_ElfBar);
+            replyMarkup: inlineKeyboard_ElfBarBack);
     }
     if (callbackQuery.Data == "elf_2000")
     {
@@ -410,28 +406,83 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
             $"Выберите вкус: \n Ананас манго апельсин \n Голубика малина лед \n Киви маракуйя гуава \n Киви ягода \n Клубника арбуз \n Кола \n Красный мохито \n Манго Персик Арбуз \n Персик Манго Гуава \n Яблоко Персик",
-            replyMarkup: inlineKeyboard_ElfBar);
+            replyMarkup: inlineKeyboard_ElfBarBack);
         return;
     }
-    if (callbackQuery.Data == "")
+    if (callbackQuery.Data == "elf_3000")
     {
         await botClient.EditMessageTextAsync(
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
-            $"Выберите вкус: ",
-            replyMarkup: inlineKeyboard_ElfBar);
+            $"Выберите вкус: \n Ананасовый лед \n Гуавовый лед \n Киви Гуава \n Киви Маракуйя Гуава \n Клубника Ананас Кокос \n Клубника Манго \n Клубничный Киви \n Клубничный лед \n Клюквенный Виноград \n Красный Мохито \n Лимонная мята \n Манго Абрикос Персик \n Манго Персик \n Персик Манго Арбуз \n Сакура Виноград \n Синий Разз Айс \n Тройная дыня \n Энергетик    ",
+            replyMarkup: inlineKeyboard_ElfBarBack);
         return;
     }
-    if (callbackQuery.Data == "")
+    if (callbackQuery.Data == "elf_4000")
     {
         await botClient.EditMessageTextAsync(
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
-            $"Выберите вкус: ",
-            replyMarkup: inlineKeyboard_ElfBar);
+            $"Выберите вкус: Авокадо Крем\n Арбузный лед\n Голубика лед\n Голубика Малина Лед\n Зеленое яблоко\n Киви Маракуйя Гуава\n Клубника Киви\n Клубника Манго\n Клюква Виноград\n Кола\n Красный Мохито\n Лимон Мята\n Манго Персик\n Маракуйя Апельсин Гуава\n Персик Манго Арбуз\n Сакура Виноград\n Синий Разз Айс\n Тройной ягодный лед\n Черничный лед\n Энергетик\n Grape Energy\n Grape HoneyDew\n Juicy Peach\n Mocha Chocolate\n Strawberry grape\n Strawberry Ice\n Strawberry Ice Cream\n Taro Ice Cream\n Vanilla Ice Cream\n\n",
+            replyMarkup: inlineKeyboard_ElfBarBack);
         return;
     }
     #endregion
+
+    #region Puffmi
+    InlineKeyboardMarkup inlineKeyboard_PuffmiBack = new(new[]
+           {
+            new[]
+            {   InlineKeyboardButton.WithCallbackData("Заказать", "контакты"),
+                InlineKeyboardButton.WithCallbackData("Назад", "puffmi")
+            }
+    });
+    if (callbackQuery.Data == "puffmi")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выберите колличество затяжек:",
+            replyMarkup: inlineKeyboard_Puffmi);
+        return;
+    }
+    if (callbackQuery.Data == "puffmi_1500")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выберите вкус: \nАрбузный лед\n Банановый лед\n Виноградный лед\n Двойное яблоко\n Жвачка\n Клубничная Жвачка\n Клубничное мороженое\n Манговый Лед\n Персиковый лед\n Энергетик\n Ягодный микс\n Ягоды и Арбуз\n Cotton Candy\n Mint\n\n",
+            replyMarkup: inlineKeyboard_PuffmiBack);
+        return;
+    }
+    if (callbackQuery.Data == "puffmi_3500")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выберите вкус:\n Алоэ и Виноград\n Ананас Манго\n арбузный лед\n Кислый Яблочный Лёд\n Клубника и Киви\n клубничное мороженное\n Клюквенный лимонный лед\n Коктейль\n Ледяная мята\n Манговый лед\n мята  гуава\n Персик и Лимон\n Персиковый Лед\n Пина колада\n Черника и Малина\n черничный лед\n\n",
+            replyMarkup: inlineKeyboard_PuffmiBack);
+        return;
+    }
+    if (callbackQuery.Data == "puffmi_4500")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выберите вкус: \nBanana Ice\n Blue Razz\n Cola Ice\n Cool Mint\n Energy Drink\n Grape Ice\n Mango Ice\n Pink Lemonade\n Quad Berry\n Strawberry Ice Cream\n Strawberry Kiwi\n Tobacco\n Watermelon Berry\n Watermelone Ice\n\n",
+            replyMarkup: inlineKeyboard_PuffmiBack);
+        return;
+    }
+    #endregion
+
+    #region Lost Mary
+    InlineKeyboardMarkup inlineKeyboard_LostMaryBack = new(new[]
+           {
+            new[]
+            {   InlineKeyboardButton.WithCallbackData("Заказать", "контакты"),
+                InlineKeyboardButton.WithCallbackData("Назад", "lost mary")
+            }
+    });
     if (callbackQuery.Data == "lost mary")
     {
         await botClient.EditMessageTextAsync(
@@ -441,15 +492,26 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             replyMarkup: inlineKeyboard_LostMary);
         return;
     }
-    if (callbackQuery.Data == "puffmi")
+    if (callbackQuery.Data == "lostmary_4000")
     {
         await botClient.EditMessageTextAsync(
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
-            $"Вы хотите купить PUFFMI?",
-            replyMarkup: inlineKeyboard_Puffmi);
+            $"Выберите вкус: \nАнанас Манго\n Арбуз\n Виноград\n Голубика Малина Лед\n Киви Маракуйя Гуава\n Клубника Манго\n Клубника Пинаколада\n Клубничный Лед\n Клюквенная Сода\n Мороженое с Клубничным Джемом\n Сочный Персик\n Черничный Лед\n\n",
+            replyMarkup: inlineKeyboard_LostMaryBack);
         return;
     }
+    if (callbackQuery.Data == "lostmary_5000")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выберите вкус: ",
+            replyMarkup: inlineKeyboard_LostMaryBack);
+        return;
+    }
+    #endregion
+
     if (callbackQuery.Data == "udn")
     {
         await botClient.EditMessageTextAsync(

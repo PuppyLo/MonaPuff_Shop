@@ -291,7 +291,8 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
     InlineKeyboardMarkup inlineKeyboard_HQDBack = new(new[]
            {
             new[]
-            {   InlineKeyboardButton.WithCallbackData("Заказать", "контакты"),
+            {
+                InlineKeyboardButton.WithUrl("Связаться c менеджером", @"https://t.me/vova534"),
                 InlineKeyboardButton.WithCallbackData("Назад", "hqd")
             }
     });
@@ -379,7 +380,8 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
     InlineKeyboardMarkup inlineKeyboard_ElfBarBack = new(new[]
           {
             new[]
-            {   InlineKeyboardButton.WithCallbackData("Заказать", "контакты"),
+            {
+                InlineKeyboardButton.WithUrl("Связаться c менеджером", @"https://t.me/vova534"),
                 InlineKeyboardButton.WithCallbackData("Назад", "elf bar")
             }
                 });
@@ -433,7 +435,8 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
     InlineKeyboardMarkup inlineKeyboard_PuffmiBack = new(new[]
            {
             new[]
-            {   InlineKeyboardButton.WithCallbackData("Заказать", "контакты"),
+            {
+                InlineKeyboardButton.WithUrl("Связаться c менеджером", @"https://t.me/vova534"),
                 InlineKeyboardButton.WithCallbackData("Назад", "puffmi")
             }
     });
@@ -479,7 +482,8 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
     InlineKeyboardMarkup inlineKeyboard_LostMaryBack = new(new[]
            {
             new[]
-            {   InlineKeyboardButton.WithCallbackData("Заказать", "контакты"),
+            {
+                InlineKeyboardButton.WithUrl("Связаться c менеджером", @"https://t.me/vova534"),
                 InlineKeyboardButton.WithCallbackData("Назад", "lost mary")
             }
     });
@@ -488,7 +492,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
         await botClient.EditMessageTextAsync(
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
-            $"Вы хотите купить LOST MARY?",
+            $"Выберите колличество затяжек:",
             replyMarkup: inlineKeyboard_LostMary);
         return;
     }
@@ -506,7 +510,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
         await botClient.EditMessageTextAsync(
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
-            $"Выберите вкус: ",
+            $"Выберите вкус: \nАнанасовый кокосовый лед\n Арбузный лед\n Виноградный яблочный лед\n Вишня Персик Лимонад\n Клубника Черника Вишня\n Клубничное мороженое\n Клюквенная сода\n Красный яблочный лед\n Манго Маракуйя\n Мармеладные мишки\n Сахарная вата\n Смешанные ягоды\n Черника Малина Вишня\n Энергетик\n\n",
             replyMarkup: inlineKeyboard_LostMaryBack);
         return;
     }

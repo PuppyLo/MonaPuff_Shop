@@ -73,12 +73,10 @@ async Task HandleMessage(ITelegramBotClient botClient, Message message)
             new[]
             {
                 InlineKeyboardButton.WithCallbackData("Электронки", "электронки"),
-                InlineKeyboardButton.WithCallbackData("Жидкости", "жидкости"),
-                InlineKeyboardButton.WithCallbackData("Кальянный табак", "кальянный табак")
+                InlineKeyboardButton.WithCallbackData("Жидкости", "жидкости")
             },
             new[]
             {
-                InlineKeyboardButton.WithCallbackData("Стики/Сигареты", "стики/сигареты"),
                 InlineKeyboardButton.WithCallbackData("POD/Устройства", "POD/Устройства"),
                 InlineKeyboardButton.WithCallbackData("Аксессуары", "аксессуары")
             }
@@ -125,12 +123,10 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
             new[]
             {
                 InlineKeyboardButton.WithCallbackData("Электронки", "электронки"),
-                InlineKeyboardButton.WithCallbackData("Жидкости", "жидкости"),
-                InlineKeyboardButton.WithCallbackData("Кальянный табак", "кальянный табак")
+                InlineKeyboardButton.WithCallbackData("Жидкости", "жидкости")
             },
             new[]
             {
-                InlineKeyboardButton.WithCallbackData("Стики", "стики/сигареты"),
                 InlineKeyboardButton.WithCallbackData("POD/Устройства", "POD/Устройства"),
                 InlineKeyboardButton.WithCallbackData("Аксессуары/Запчасти к POD","аксессуары")
             }
@@ -729,7 +725,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
                 InlineKeyboardButton.WithCallbackData("HotSpot", "hotspot"),
                 InlineKeyboardButton.WithCallbackData("Husky", "husky"),
                 InlineKeyboardButton.WithCallbackData("Maxwell's", "maxwells"),
-                InlineKeyboardButton.WithCallbackData("MAD", "mad"),
+                InlineKeyboardButton.WithCallbackData("MAD", "mad")
             },
         new[]
             {
@@ -785,6 +781,19 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
                 InlineKeyboardButton.WithCallbackData("Назад", "жидкости")
             },
                 });
+    InlineKeyboardMarkup inlineKeyboard_Boshki = new(new[]
+{
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Boshki - 2%", "boshki2"),
+                InlineKeyboardButton.WithCallbackData("Boshki - 5%", "boshki5")
+            },
+        new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Назад", "жидкости")
+            },
+                });
+
     #endregion
 
     if (callbackQuery.Data == "жидкости")
@@ -1009,41 +1018,45 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
     }
     #endregion
 
-    #endregion
-
-    #region Кальянный табак
-    #region Команды
-    InlineKeyboardMarkup inlineKeyboard_Tabak = new(new[]
+    #region Boshki
+    InlineKeyboardMarkup inlineKeyboard_BoshkiBack = new(new[]
            {
             new[]
             {
-                InlineKeyboardButton.WithCallbackData("DarkSide", "darkside"),
-                InlineKeyboardButton.WithCallbackData("Must Have", "must have"),
-                InlineKeyboardButton.WithCallbackData("Black Burn", "Burn")
-
-            },
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData("Brusko ", "Brusko Таб"),
-                InlineKeyboardButton.WithCallbackData("Daily Hookah", "daily hookah")
-
-            },
-        new[]
-            {
-                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
-            },
-                });
-
-    #endregion
-    if (callbackQuery.Data == "кальянный табак")
+                InlineKeyboardButton.WithUrl("Связаться c менеджером", @"https://t.me/vova534"),
+                InlineKeyboardButton.WithCallbackData("Назад", "boshki")
+            }
+    });
+    if (callbackQuery.Data == "boshki")
     {
         await botClient.EditMessageTextAsync(
             callbackQuery.From.Id.ToString(),
             callbackQuery.Message.MessageId,
-            $"Выберите производителя?",
-            replyMarkup: inlineKeyboard_Tabak);
+            $"Выберитеme крепость:",
+            replyMarkup: inlineKeyboard_Boshki);
         return;
     }
+    if (callbackQuery.Data == "boshki2")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выберитеme вкус:\n Бодрые\n Дачные\n Добрые\n Докторские\n Зимние\n Злые\n Кубанские\n садовые\n Садовые\n Сахарные\n Сочные\n Тропические\n Целебние\n Черные\n Ягодки\n Cs\n Exotic\n Neon\n Original",
+            replyMarkup: inlineKeyboard_BoshkiBack);
+        return;
+    }
+    if (callbackQuery.Data == "boshki5")
+    {
+        await botClient.EditMessageTextAsync(
+            callbackQuery.From.Id.ToString(),
+            callbackQuery.Message.MessageId,
+            $"Выберитеme вкус:\n Бодрые\n Дачные\n Добрые\n Добрые On Ice\n Зимние\n Злые\n Кубанские\n Садовые\n Сахарные\n Сочные\n Целебные\n Черные\n Exotic\n Neon\n Original\r\n",
+            replyMarkup: inlineKeyboard_BoshkiBack);
+        return;
+    }
+    #endregion
+
+
     #endregion
 
     #region POD/Устройства
@@ -1103,76 +1116,7 @@ async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callb
     }
     #endregion
 
-    #region Стики/Сигареты
-    #region Команды
-    InlineKeyboardMarkup inlineKeyboard_Stics = new(new[]
-           {
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData("Heets", "heets"),
-                InlineKeyboardButton.WithCallbackData("Fiit", "fiit"),
-
-            },
-        new[]
-            {
-                InlineKeyboardButton.WithCallbackData("Назад", "main menu")
-            },
-                });
-    InlineKeyboardMarkup inlineKeyboard_Heets = new(new[]
-           {
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData("Amber", "brusko"),
-                InlineKeyboardButton.WithCallbackData("Ruby", "boshki"),
-
-            },
-        new[]
-            {
-                InlineKeyboardButton.WithCallbackData("Назад", "стики/сигареты")
-            },
-                });
-    InlineKeyboardMarkup inlineKeyboard_Fiit = new(new[]
-           {
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData("Regular", "brusko"),
-                InlineKeyboardButton.WithCallbackData("Viola", "boshki"),
-
-            },
-        new[]
-            {
-                InlineKeyboardButton.WithCallbackData("Назад", "стики/сигареты")
-            },
-                });
-    #endregion
-    if (callbackQuery.Data == "стики/сигареты")
-    {
-        await botClient.EditMessageTextAsync(
-            callbackQuery.From.Id.ToString(),
-            callbackQuery.Message.MessageId,
-            $"Вы хотите купить Стики?",
-            replyMarkup: inlineKeyboard_Stics);
-        return;
-    }
-    if (callbackQuery.Data == "heets")
-    {
-        await botClient.EditMessageTextAsync(
-            callbackQuery.From.Id.ToString(),
-            callbackQuery.Message.MessageId,
-            $"Вы хотите купить Стики HEETS?",
-            replyMarkup: inlineKeyboard_Heets);
-        return;
-    }
-    if (callbackQuery.Data == "fiit")
-    {
-        await botClient.EditMessageTextAsync(
-            callbackQuery.From.Id.ToString(),
-            callbackQuery.Message.MessageId,
-            $"Вы хотите купить Стики?",
-            replyMarkup: inlineKeyboard_Fiit);
-        return;
-    }
-    #endregion
+    
 
     if (callbackQuery.Data == "контакты")
     {
